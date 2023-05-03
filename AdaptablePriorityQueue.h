@@ -20,24 +20,24 @@ private:
     vector<Entry> heap;
 
     int left_child(int i) {
-        return 2 * i + 1; // GET LEFT CHILD
+        return 2 * i + 1; // GET LEFT CHILD - 0(1)
     }
 
     int right_child(int i) {
-        return 2 * i + 2; // GET RIGHT CHILD
+        return 2 * i + 2; // GET RIGHT CHILD - 0(1)
     }
 
     int parent(int i) { 
-        return (i - 1) / 2; // GET PARENT
+        return (i - 1) / 2; // GET PARENT - 0(1)
     }
 
-    void swapEntries(int i, int j) { // swap funciton
+    void swapEntries(int i, int j) { // swap funciton - 0(1)
         Entry tmp = heap[i];
         heap[i] = heap[j];
         heap[j] = tmp;
     }
 
-    void heapify_up(int i) {
+    void heapify_up(int i) { // 0(log n)
         int p = parent(i);
         while (i > 0 && heap[i].bid > heap[p].bid) {
             swapEntries(i, p);
@@ -46,7 +46,7 @@ private:
         }
     }
 
-    void heapify_down(int i) {
+    void heapify_down(int i) { // 0(log n)
         int leftChild = left_child(i);
         int rightChild = right_child(i);
         int maxIndex = i;
@@ -74,7 +74,7 @@ private:
 
 public: // main can access
 
-    void enqueue(int bid, const string& name) {
+    void enqueue(int bid, const string& name) { // 0(log n) - heapify_up
         Entry new_entry(bid, name);
         heap.push_back(new_entry);
         heapify_up(heap.size() - 1);
@@ -87,7 +87,7 @@ public: // main can access
         return heap[0].name;
     }
 
-    string dequeue() {
+    string dequeue() { // 0(log n) - heapify_down
         if (heap.empty()) {
             return "The queue is empty.";
         }
@@ -98,7 +98,7 @@ public: // main can access
         return name;
     }
 
-    bool removeAny(const string& name) {
+    bool removeAny(const string& name) { // 0(log n) - heapify_down/up
         int idx = findIndex(name);
         if (idx == -1) {
             return false;
@@ -128,7 +128,7 @@ public: // main can access
         cout << endl;
     }
 
-    bool isEmpty() {
+    bool isEmpty() { // 0(1)
         return heap.size() == 0;
     }
 };
